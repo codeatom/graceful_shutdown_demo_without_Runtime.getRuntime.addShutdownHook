@@ -19,9 +19,6 @@ import static application.maintenence.StaticResources.*;
 
 public class CollectionDataLoader {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-
     public void init(){
         loadLatestStudentId();
         loadStudents();
@@ -31,17 +28,14 @@ public class CollectionDataLoader {
     public static void loadLatestStudentId(){
         Properties properties = new Properties();
 
-        String currentCourseId = "0";
-        String currentStudentId = "0";
-
         try(FileReader reader = new FileReader(SEQUENCERS_FILE)){
             properties.load(reader);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        currentStudentId = properties.getProperty("currentStudentId");
-        currentCourseId = properties.getProperty("currentCourseId");
+        String currentStudentId = properties.getProperty("currentStudentId");
+        String currentCourseId = properties.getProperty("currentCourseId");
 
         StudentSequencer.setStudentSequencer(Integer.parseInt(currentStudentId));
         CourseSequencer.setCourseSequencer(Integer.parseInt(currentCourseId));
